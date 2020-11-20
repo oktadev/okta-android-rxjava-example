@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  tools:context=".ui.HomeActivity">
+
+  <TextView
+    android:id="@+id/userLabel"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:gravity="center"
+    android:textSize="22sp"
+    tools:ignore="HardcodedText"
+    tools:text="Hello, user!" />
+
+  <Button
+    android:id="@+id/signOutButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/grid_16"
+    android:layout_marginStart="@dimen/grid_40"
+    android:layout_marginEnd="@dimen/grid_40"
+    android:text="Log out"
+    tools:ignore="HardcodedText" />
+</LinearLayout>

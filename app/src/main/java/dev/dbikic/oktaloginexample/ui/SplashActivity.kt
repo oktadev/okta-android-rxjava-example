@@ -3,9 +3,12 @@ package dev.dbikic.oktaloginexample.ui
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import dev.dbikic.oktaloginexample.OktaLoginExampleApplication
+import dev.dbikic.oktaloginexample.OktaLoginApplication
+import dev.dbikic.oktaloginexample.managers.OktaManager
 
 class SplashActivity : AppCompatActivity() {
+
+    private val oktaManager: OktaManager by lazy { (application as OktaLoginApplication).oktaManager }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -13,8 +16,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun checkIfUserIsAuthenticated() {
-        val isAuthenticated = (application as OktaLoginExampleApplication).oktaManger.isAuthenticated()
-        val intent = if (isAuthenticated) {
+        val intent = if (oktaManager.isAuthenticated()) {
             Intent(this, HomeActivity::class.java)
         } else {
             Intent(this, LoginActivity::class.java)

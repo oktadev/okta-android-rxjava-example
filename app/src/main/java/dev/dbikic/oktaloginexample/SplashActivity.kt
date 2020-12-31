@@ -9,7 +9,7 @@ import dev.dbikic.oktaloginexample.ui.LoginActivity
 class SplashActivity : AppCompatActivity() {
 
     private val oktaManager: OktaManager by lazy { (application as OktaLoginApplication).oktaManager }
-    // <1>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (oktaManager.isAuthenticated()) {

@@ -25,19 +25,19 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupOktaCallback() {
-        oktaManager.registerWebAuthCallback(getAuthCallback(), this)  // <1>
+        oktaManager.registerWebAuthCallback(getAuthCallback(), this)
     }
 
     private fun setupViews() {
         binding.signInButton.setOnClickListener {
             val payload = AuthenticationPayload.Builder().build()
-            oktaManager.signIn(this, payload)  // <2>
+            oktaManager.signIn(this, payload)
         }
     }
 
     private fun getAuthCallback(): ResultCallback<AuthorizationStatus, AuthorizationException> {
         return object : ResultCallback<AuthorizationStatus, AuthorizationException> {
-            override fun onSuccess(result: AuthorizationStatus) {  // <3>
+            override fun onSuccess(result: AuthorizationStatus) {
                 when (result) {
                     AUTHORIZED -> navigateToHome()
                     SIGNED_OUT -> Log.d("LoginActivity", "Signed out")

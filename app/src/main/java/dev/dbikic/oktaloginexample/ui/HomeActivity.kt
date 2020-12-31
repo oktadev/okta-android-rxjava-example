@@ -21,18 +21,18 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        oktaManager.registerUserProfileCallback(getUserProfileCallback()) // <1>
+        oktaManager.registerUserProfileCallback(getUserProfileCallback())
         binding.signOutButton.setOnClickListener {
-            oktaManager.signOut(this, getSignOutCallback()) // <2>
+            oktaManager.signOut(this, getSignOutCallback())
         }
     }
 
     private fun getSignOutCallback(): RequestCallback<Int, AuthorizationException> {
         return object : RequestCallback<Int, AuthorizationException> {
             override fun onSuccess(result: Int) {
-                oktaManager.clearUserData() // <3>
-                val intent = Intent(this@HomeActivity, LoginActivity::class.java) // <4>
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP // <5>
+                oktaManager.clearUserData()
+                val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
                 finish()
             }
@@ -46,7 +46,7 @@ class HomeActivity : AppCompatActivity() {
     private fun getUserProfileCallback(): RequestCallback<UserInfo, AuthorizationException> {
         return object : RequestCallback<UserInfo, AuthorizationException> {
             override fun onSuccess(result: UserInfo) {
-                binding.userLabel.text = "Hello, ${result["preferred_username"]}!" // <6>
+                binding.userLabel.text = "Hello, ${result["preferred_username"]}!"
             }
 
             override fun onError(msg: String?, exception: AuthorizationException?) {

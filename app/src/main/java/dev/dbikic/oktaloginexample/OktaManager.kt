@@ -14,19 +14,19 @@ class OktaManager(applicationContext: Context) {
     /**
      * Authorization client using chrome custom tab as a user agent.
      */
-    private var webAuth: WebAuthClient // <1>
+    private var webAuth: WebAuthClient
 
     /**
      * The authorized client to interact with Okta's endpoints.
      */
-    private var sessionClient: SessionClient // <2>
+    private var sessionClient: SessionClient
 
     init {
         val config = OIDCConfig.Builder()
-            .clientId("0oa39f9k5cre3IqpN5d6") // <3>
-            .discoveryUri("https://dev-6974382.okta.com") // <4>
-            .redirectUri("com.okta.dev-6974382:/callback") // <5>
-            .endSessionRedirectUri("com.okta.dev-6974382:/") // <6>
+            .clientId("********************")
+            .discoveryUri("https://dev-123456.okta.com")
+            .redirectUri("com.okta.dev-123456:/callback")
+            .endSessionRedirectUri("com.okta.dev-123456:/")
             .scopes("openid", "profile", "offline_access")
             .create()
         webAuth = Okta.WebAuthBuilder()
@@ -34,7 +34,7 @@ class OktaManager(applicationContext: Context) {
             .withContext(applicationContext)
             .withCallbackExecutor(null)
             .withEncryptionManager(DefaultEncryptionManager(applicationContext))
-            .setRequireHardwareBackedKeyStore(false)  // <7>
+            .setRequireHardwareBackedKeyStore(false)
             .create()
         sessionClient = webAuth.sessionClient
     }

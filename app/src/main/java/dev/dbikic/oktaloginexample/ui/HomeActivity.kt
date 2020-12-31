@@ -2,41 +2,43 @@ package dev.dbikic.oktaloginexample.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.okta.oidc.RequestCallback
 import com.okta.oidc.net.response.UserInfo
 import com.okta.oidc.util.AuthorizationException
 import dev.dbikic.oktaloginexample.OktaLoginApplication
-import dev.dbikic.oktaloginexample.R
-import dev.dbikic.oktaloginexample.extensions.showShortToast
-import dev.dbikic.oktaloginexample.managers.OktaManager
-import kotlinx.android.synthetic.main.activity_home.*
+import dev.dbikic.oktaloginexample.OktaManager
+import dev.dbikic.oktaloginexample.databinding.ActivityHomeBinding
 
-class HomeActivity : AppCompatActivity(R.layout.activity_home) {
+class HomeActivity : AppCompatActivity() {
 
     private val oktaManager: OktaManager by lazy { (application as OktaLoginApplication).oktaManager }
+    private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        oktaManager.registerUserProfileCallback(getUserProfileCallback())
-        signOutButton.setOnClickListener {
-            oktaManager.signOut(this, getSignOutCallback())
+        oktaManager.registerUserProfileCallback(getUserProfileCallback()) // <1>
+        binding.signOutButton.setOnClickListener {
+            oktaManager.signOut(this, getSignOutCallback()) // <2>
         }
     }
 
     private fun getSignOutCallback(): RequestCallback<Int, AuthorizationException> {
         return object : RequestCallback<Int, AuthorizationException> {
             override fun onSuccess(result: Int) {
-                oktaManager.clearUserData()
-                val intent = Intent(this@HomeActivity, LoginActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                oktaManager.clearUserData() // <3>
+                val intent = Intent(this@HomeActivity, LoginActivity::class.java) // <4>
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP // <5>
                 startActivity(intent)
                 finish()
             }
 
             override fun onError(msg: String?, exception: AuthorizationException?) {
-                showShortToast("Error: $msg")
+                Log.d("HomeActivity", "Error: $msg")
             }
         }
     }
@@ -44,11 +46,11 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
     private fun getUserProfileCallback(): RequestCallback<UserInfo, AuthorizationException> {
         return object : RequestCallback<UserInfo, AuthorizationException> {
             override fun onSuccess(result: UserInfo) {
-                userLabel.text = "Hello, ${result["preferred_username"]}!"
+                binding.userLabel.text = "Hello, ${result["preferred_username"]}!" // <6>
             }
 
             override fun onError(msg: String?, exception: AuthorizationException?) {
-                showShortToast("Error: $msg")
+                Log.d("HomeActivity", "Error: $msg")
             }
         }
     }

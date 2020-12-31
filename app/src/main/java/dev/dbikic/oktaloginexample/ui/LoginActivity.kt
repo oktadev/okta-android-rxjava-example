@@ -2,52 +2,64 @@ package dev.dbikic.oktaloginexample.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.okta.oidc.*
+import com.okta.oidc.AuthorizationStatus.*
 import com.okta.oidc.util.AuthorizationException
 import dev.dbikic.oktaloginexample.OktaLoginApplication
-import dev.dbikic.oktaloginexample.R
-import dev.dbikic.oktaloginexample.extensions.showShortToast
-import dev.dbikic.oktaloginexample.managers.OktaManager
-import kotlinx.android.synthetic.main.activity_login.*
+import dev.dbikic.oktaloginexample.OktaManager
+import dev.dbikic.oktaloginexample.databinding.ActivityLoginBinding
 
-class LoginActivity : AppCompatActivity(R.layout.activity_login) {
+class LoginActivity : AppCompatActivity() {
 
     private val oktaManager: OktaManager by lazy { (application as OktaLoginApplication).oktaManager }
+    private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setupOktaCallback()
+        setupViews()
+    }
 
-        oktaManager.registerWebAuthCallback(getAuthCallback(), this)
-        signInButton.setOnClickListener {
+    private fun setupOktaCallback() {
+        oktaManager.registerWebAuthCallback(getAuthCallback(), this)  // <1>
+    }
+
+    private fun setupViews() {
+        binding.signInButton.setOnClickListener {
             val payload = AuthenticationPayload.Builder().build()
-            oktaManager.signIn(this, payload)
+            oktaManager.signIn(this, payload)  // <2>
         }
     }
 
     private fun getAuthCallback(): ResultCallback<AuthorizationStatus, AuthorizationException> {
         return object : ResultCallback<AuthorizationStatus, AuthorizationException> {
-            override fun onSuccess(result: AuthorizationStatus) {
+            override fun onSuccess(result: AuthorizationStatus) {  // <3>
                 when (result) {
-                    AuthorizationStatus.AUTHORIZED -> {
-                        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
-                        finish()
-                    }
-                    AuthorizationStatus.SIGNED_OUT -> showShortToast("Signed out")
-                    AuthorizationStatus.CANCELED -> showShortToast("Canceled")
-                    AuthorizationStatus.ERROR -> showShortToast("Error")
-                    AuthorizationStatus.EMAIL_VERIFICATION_AUTHENTICATED -> showShortToast("Email verification authenticated")
-                    AuthorizationStatus.EMAIL_VERIFICATION_UNAUTHENTICATED -> showShortToast("Email verification unauthenticated")
+                    AUTHORIZED -> navigateToHome()
+                    SIGNED_OUT -> Log.d("LoginActivity", "Signed out")
+                    CANCELED -> Log.d("LoginActivity", "Canceled")
+                    ERROR -> Log.d("LoginActivity", "Error")
+                    EMAIL_VERIFICATION_AUTHENTICATED -> Log.d("LoginActivity", "Email verification authenticated")
+                    EMAIL_VERIFICATION_UNAUTHENTICATED -> Log.d("LoginActivity", "Email verification unauthenticated")
                 }
             }
 
             override fun onCancel() {
-                showShortToast("Canceled")
+                Log.d("LoginActivity", "Canceled")
             }
 
             override fun onError(msg: String?, exception: AuthorizationException?) {
-                showShortToast("Error: $msg")
+                Log.d("LoginActivity", "Error: $msg")
             }
         }
+    }
+
+    private fun navigateToHome() {
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
     }
 }

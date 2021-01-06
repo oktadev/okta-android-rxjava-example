@@ -1,7 +1,6 @@
 package dev.dbikic.oktaloginexample
 
 import android.app.Application
-import dev.dbikic.oktaloginexample.managers.OktaManager
 
 class OktaLoginApplication : Application() {
 
@@ -12,3 +11,4 @@ class OktaLoginApplication : Application() {
         oktaManager = OktaManager(this)
     }
 }
+

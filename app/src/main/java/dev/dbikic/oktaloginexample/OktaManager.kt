@@ -1,4 +1,4 @@
-package dev.dbikic.oktaloginexample.managers
+package dev.dbikic.oktaloginexample
 
 import android.app.Activity
 import android.content.Context
@@ -34,7 +34,7 @@ class OktaManager(applicationContext: Context) {
             .withContext(applicationContext)
             .withCallbackExecutor(null)
             .withEncryptionManager(DefaultEncryptionManager(applicationContext))
-            .setRequireHardwareBackedKeyStore(true)
+            .setRequireHardwareBackedKeyStore(false)
             .create()
         sessionClient = webAuth.sessionClient
     }

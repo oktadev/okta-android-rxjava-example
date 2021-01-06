@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="dev.dbikic.oktaloginexample">
+    package="dev.dbikic.oktaloginexample">
 
-  <application
-    android:allowBackup="true"
-    android:icon="@mipmap/ic_launcher"
-    android:label="@string/app_name"
-    android:name="dev.dbikic.oktaloginexample.OktaLoginApplication"
-    android:roundIcon="@mipmap/ic_launcher_round"
-    android:supportsRtl="true"
-    android:theme="@style/Theme.MyApplication">
+    <uses-permission android:name="android.permission.INTERNET" />
 
-    <activity
-      android:name="dev.dbikic.oktaloginexample.ui.SplashActivity"
-      android:theme="@style/SplashTheme">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
-    <activity
-      android:name="dev.dbikic.oktaloginexample.ui.LoginActivity"
-      android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
-    <activity
-      android:name="dev.dbikic.oktaloginexample.ui.HomeActivity"
-      android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:name=".OktaLoginApplication"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.OktaLoginExample">
 
-  </application>
+        <activity
+            android:name=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.LoginActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity
+            android:name=".ui.HomeActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
 
-  <uses-permission android:name="android.permission.INTERNET" />
+    </application>
+
 </manifest>

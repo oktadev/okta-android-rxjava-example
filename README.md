@@ -78,6 +78,6 @@ Please post any questions as comments on [this example's blog post][blog], or us
 Apache 2.0, see [LICENSE](LICENSE).
 
 [android-studio]: https://developer.android.com/studio
-[blog]: http://developer.okta.com/blog/2020/01/06/android-login
+[blog]: https://developer.okta.com/blog/2020/01/06/android-login
 [okta-cli]: https://github.com/okta/okta-cli
 

@@ -23,10 +23,10 @@ class OktaManager(applicationContext: Context) {
 
     init {
         val config = OIDCConfig.Builder()
-            .clientId("********************")
-            .discoveryUri("https://dev-123456.okta.com")
-            .redirectUri("com.okta.dev-123456:/callback")
-            .endSessionRedirectUri("com.okta.dev-123456:/")
+            .clientId("0oaptwnstyKeZVleW5d6")
+            .discoveryUri("https://dev-11062253.okta.com/oauth2/default")
+            .redirectUri("com.okta.dev-11062253:/callback")
+            .endSessionRedirectUri("com.okta.dev-11062253:/")
             .scopes("openid", "profile", "offline_access")
             .create()
         webAuth = Okta.WebAuthBuilder()
@@ -61,5 +61,9 @@ class OktaManager(applicationContext: Context) {
 
     fun clearUserData() {
         sessionClient.clear()
+    }
+
+    fun getJwtToken(): String {
+        return sessionClient.tokens.accessToken.orEmpty()
     }
 }

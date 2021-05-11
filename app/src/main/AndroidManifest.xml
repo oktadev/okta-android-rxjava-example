@@ -11,7 +11,8 @@
         android:name=".OktaLoginApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OktaLoginExample">
+        android:theme="@style/Theme.OktaLoginExample"
+        android:usesCleartextTraffic="true">
 
         <activity
             android:name=".SplashActivity">

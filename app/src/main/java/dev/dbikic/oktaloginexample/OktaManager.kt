@@ -24,9 +24,9 @@ class OktaManager(applicationContext: Context) {
     init {
         val config = OIDCConfig.Builder()
             .clientId("0oaptwnstyKeZVleW5d6")
-            .discoveryUri("https://dev-11062253.okta.com/oauth2/default")
-            .redirectUri("com.okta.dev-11062253:/callback")
-            .endSessionRedirectUri("com.okta.dev-11062253:/")
+            .discoveryUri("https://dev-1106225.okta.com/oauth2/default")
+            .redirectUri("com.okta.dev-1106225:/callback")
+            .endSessionRedirectUri("com.okta.dev-1106225:/")
             .scopes("openid", "profile", "offline_access")
             .create()
         webAuth = Okta.WebAuthBuilder()

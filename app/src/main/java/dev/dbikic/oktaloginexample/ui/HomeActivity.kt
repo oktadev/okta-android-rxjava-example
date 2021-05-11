@@ -22,10 +22,10 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class HomeActivity : AppCompatActivity() {
 
-    private val profileService: ProfileService = retrofitInstance.create( // <1>
+    private val profileService: ProfileService = retrofitInstance.create(
         ProfileService::class.java
     )
-    private var compositeDisposable = CompositeDisposable() // <2>
+    private var compositeDisposable = CompositeDisposable()
 
     private var adapter = ProfilesAdapter(
         onDeleteClickListener = { profile -> deleteProfile(profile) },
@@ -69,7 +69,7 @@ class HomeActivity : AppCompatActivity() {
         return object : RequestCallback<UserInfo, AuthorizationException> {
             override fun onSuccess(result: UserInfo) {
                 binding.userLabel.text = "Hello, ${result["preferred_username"]}!"
-                RetrofitClientInstance.setToken(oktaManager.getJwtToken()) // <4>
+                RetrofitClientInstance.setToken(oktaManager.getJwtToken())
                 fetchProfiles()
             }
 
@@ -80,15 +80,15 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun fetchProfiles() {
-        compositeDisposable.add( // <1>
-            profileService.getProfiles() // <2>
-                .subscribeOn(Schedulers.io()) // <3>
-                .observeOn(AndroidSchedulers.mainThread()) // <4>
-                .subscribe( // <5>
-                    { profiles -> // <6>
-                        displayProfiles(profiles) // <7>
+        compositeDisposable.add(
+            profileService.getProfiles()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { profiles ->
+                        displayProfiles(profiles)
                     },
-                    { throwable -> // <8>
+                    { throwable ->
                         Log.e("HomeActivity", throwable.message ?: "onError")
                     }
                 )
@@ -96,20 +96,20 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-        compositeDisposable.clear() // <3>
+        compositeDisposable.clear()
         super.onStop()
     }
 
     private fun createProfile() {
-        val profile = ProfileRequest(email = System.currentTimeMillis().toString()) // <1>
+        val profile = ProfileRequest(email = System.currentTimeMillis().toString())
         compositeDisposable.add(
-            profileService.createProfile(profile) // <2>
-                .andThen(profileService.getProfiles()) // <3>
+            profileService.createProfile(profile)
+                .andThen(profileService.getProfiles())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { profiles ->
-                        displayProfiles(profiles) // <4>
+                        displayProfiles(profiles)
                     },
                     { throwable ->
                         Log.e("HomeActivity", throwable.message ?: "onError")
@@ -120,7 +120,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun deleteProfile(profile: Profile) {
         compositeDisposable.add(
-            profileService.deleteProfile(profile.id) // <1>
+            profileService.deleteProfile(profile.id)
                 .andThen(profileService.getProfiles())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -138,12 +138,12 @@ class HomeActivity : AppCompatActivity() {
     private fun updateProfile(oldProfile: Profile) {
         val profile = ProfileRequest(email = System.currentTimeMillis().toString())
         compositeDisposable.add(
-            profileService.updateProfile(oldProfile.id, profile) // <1>
+            profileService.updateProfile(oldProfile.id, profile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { newProfiles ->
-                        displayUpdatedProfile(oldProfile, newProfiles.first()) // <2>
+                        displayUpdatedProfile(oldProfile, newProfiles.first())
                     },
                     { throwable ->
                         Log.e("HomeActivity", throwable.message ?: "onError")

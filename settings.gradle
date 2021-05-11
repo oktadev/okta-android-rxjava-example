@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Okta Login Example"
+rootProject.name = "Okta Android Login Example"

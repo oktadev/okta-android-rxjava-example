@@ -10,7 +10,7 @@ object RetrofitClientInstance {
 
     lateinit var retrofit: Retrofit
 
-    private const val BASE_URL = "http://192.168.7.78:8080/" // <1>
+    private const val BASE_URL = "http://10.0.2.2:8080/"
 
     private var token = ""
 
@@ -19,25 +19,25 @@ object RetrofitClientInstance {
             if (!this::retrofit.isInitialized) {
                 val headersInterceptor = Interceptor { chain ->
                     val requestBuilder = chain.request().newBuilder()
-                    requestBuilder.header("Authorization", "Bearer $token") // <2>
+                    requestBuilder.header("Authorization", "Bearer $token")
                     chain.proceed(requestBuilder.build())
                 }
-                val okHttpClient = OkHttpClient() // <3>
+                val okHttpClient = OkHttpClient()
                     .newBuilder()
                     .followRedirects(true)
-                    .addInterceptor(headersInterceptor) // <4>
+                    .addInterceptor(headersInterceptor)
                     .build()
-                retrofit = Retrofit.Builder() // <5>
-                    .baseUrl(BASE_URL) // <6>
-                    .addConverterFactory(GsonConverterFactory.create()) // <7>
-                    .addCallAdapterFactory(RxJava3CallAdapterFactory.create()) // <8>
-                    .client(okHttpClient) // <9>
+                retrofit = Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                    .client(okHttpClient)
                     .build()
             }
             return retrofit
         }
 
-    fun setToken(token: String) { // <10>
+    fun setToken(token: String) {
         RetrofitClientInstance.token = token
     }
 }

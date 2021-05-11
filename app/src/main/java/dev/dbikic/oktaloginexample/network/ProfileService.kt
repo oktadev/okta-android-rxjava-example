@@ -8,20 +8,20 @@ import retrofit2.http.*
 
 interface ProfileService {
 
-    @GET("/profiles") // <1>
-    fun getProfiles(): Observable<List<Profile>> // <2>
+    @GET("/profiles")
+    fun getProfiles(): Observable<List<Profile>>
 
-    @POST("/profiles") // <3>
+    @POST("/profiles")
     fun createProfile(
-        @Body profile: ProfileRequest // <4>
-    ): Completable // <5>
-
-    @DELETE("/profiles/{profile_id}") // <6>
-    fun deleteProfile(
-        @Path("profile_id") profileId: String // <7>
+        @Body profile: ProfileRequest
     ): Completable
 
-    @PUT("/profiles/{profile_id}") // <8>
+    @DELETE("/profiles/{profile_id}")
+    fun deleteProfile(
+        @Path("profile_id") profileId: String
+    ): Completable
+
+    @PUT("/profiles/{profile_id}")
     fun updateProfile(
         @Path("profile_id") profileId: String,
         @Body profile: ProfileRequest

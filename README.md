@@ -1,6 +1,6 @@
 # RxJava Android example
 
-This is an example Android app which demonstrates how to use RxJava framework to communicate with a Spring Boot web app, which is secured by Okta OICD. 
+This is an example Android app which demonstrates how to use RxJava framework to communicate with a Spring Boot app, which is secured by Okta and OAuth 2.0. 
 
 **Prerequisites:**
 
@@ -19,19 +19,21 @@ This is an example Android app which demonstrates how to use RxJava framework to
 Clone the Spring Boot web app:
 
 ```bash
-git clone git@github.com:oktadeveloper/okta-spring-webflux-react-example.git reactive-spring-boot
+git clone https://github.com/oktadev/okta-spring-webflux-react-example.git reactive-spring-boot
 cd reactive-spring-boot/reactive-web
 ```
 
-Signup with Okta and create your first application:
+Use the Okta CLI to register with Okta and create your first application:
 
 ```bash
-okta register
+okta register # use `okta login` if you already have an account
 okta apps create
 ```
 
+Select **Web** and **Other** when prompted.
+
 Copy your Okta values from `.okta.env` into the `reactive-spring-boot/reactive-web/src/main/resources/application.yml` file.
-You can also use the instructions in [this](https://github.com/oktadev/okta-spring-webflux-react-example#getting-started) repo’s getting started section.
+You can also use the instructions in [this](https://github.com/oktadev/okta-spring-webflux-react-example#getting-started) repo's getting started section.
 
 Run the server by running the command:
 
@@ -42,14 +44,13 @@ Run the server by running the command:
 Clone this example's source code:
 
 ```bash
-git clone https://github.com/oktadeveloper/okta-rx-java-android-example.git
-cd okta-rx-java-android-example
+git clone https://github.com/oktadev/okta-android-rxjava-example.git
+cd okta-android-rxjava-example
 ```
 
-Signup with Okta and create your first application:
+Create another OIDC application:
 
 ```bash
-okta register
 okta apps create
 ```
 
@@ -67,7 +68,7 @@ Modify the `app/src/main/java/dev/dbikic/oktaloginexample/OktaManager.kt` to use
 init {
     val config = OIDCConfig.Builder()
         .clientId("{yourClientId}")
-        .discoveryUri("https://{yourOktaDomain}")
+        .discoveryUri("https://{yourOktaDomain}/oauth2/default")
         .redirectUri("{yourReverseOktaDomain}:/callback")
         .endSessionRedirectUri("{yourReverseOktaDomain}:/")
         .scopes("openid", "profile", "offline_access")
@@ -98,6 +99,7 @@ This example uses the following open source libraries from Okta:
 Please post any questions as comments on [this example's blog post][blog], or use our [Okta Developer Forums](https://devforum.okta.com/).
 
 ## License
+
 Apache 2.0, see [LICENSE](LICENSE).
 
 [android-studio]: https://developer.android.com/studio

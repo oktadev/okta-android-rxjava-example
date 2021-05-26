@@ -1,6 +1,6 @@
 # RxJava Android example
 
-This is an example Android app which demonstrates how to use RxJava framework to communicate with a Spring Boot app, which is secured by Okta and OAuth 2.0. 
+This is an example Android app which demonstrates how to use RxJava framework to communicate with a Spring Boot app, which is secured by Okta and OAuth 2.0. Please read [Build an Android App with RxJava and Kotlin](https://developer.okta.com/blog/2021/05/26/rxjava-android-with-kotlin) to see how it was created.
 
 **Prerequisites:**
 
@@ -103,6 +103,6 @@ Please post any questions as comments on [this example's blog post][blog], or us
 Apache 2.0, see [LICENSE](LICENSE).
 
 [android-studio]: https://developer.android.com/studio
-[blog]: https://developer.okta.com/blog/2021/01/06/android-login
+[blog]: https://developer.okta.com/blog/2021/05/26/rxjava-android-with-kotlin
 [okta-cli]: https://github.com/okta/okta-cli
 
